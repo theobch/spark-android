@@ -21,21 +21,23 @@
  */
 package com.adevinta.spark.catalog.datastore.radiobuttonconfigurator
 
+import com.adevinta.spark.components.toggles.ContentSide
+import com.adevinta.spark.components.toggles.ToggleIntent
 import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class RadioButtonConfiguratorProperties(
     val isEnabled: Boolean,
-    val contentSide: String,
     val isSelected: Boolean,
-    val intent: String,
+    val intent: ToggleIntent,
+    val contentSide: ContentSide,
 ) {
     companion object {
         val DEFAULT = RadioButtonConfiguratorProperties(
             isEnabled = true,
             isSelected = false,
-            contentSide = "End",
-            intent = "Main",
+            intent = ToggleIntent.Main,
+            contentSide = ContentSide.End,
         )
     }
 }

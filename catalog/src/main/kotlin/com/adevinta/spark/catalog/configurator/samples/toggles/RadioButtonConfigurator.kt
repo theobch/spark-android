@@ -50,7 +50,6 @@ import com.adevinta.spark.catalog.datastore.radiobuttonconfigurator.RadioButtonC
 import com.adevinta.spark.catalog.model.Configurator
 import com.adevinta.spark.catalog.themes.SegmentedButton
 import com.adevinta.spark.catalog.util.SampleSourceUrl
-import com.adevinta.spark.catalog.util.safeEnumValueOf
 import com.adevinta.spark.components.menu.DropdownMenuItem
 import com.adevinta.spark.components.text.Text
 import com.adevinta.spark.components.textfields.SelectTextField
@@ -97,18 +96,8 @@ private fun RadioButtonSample() {
         var label: String? by remember { mutableStateOf(null) }
         val isEnabled: Boolean = remember(key1 = properties.isEnabled, calculation = properties::isEnabled)
         val isSelected: Boolean = remember(key1 = properties.isSelected, calculation = properties::isSelected)
-        val contentSide: ContentSide = remember(key1 = properties.contentSide) {
-            safeEnumValueOf(
-                name = properties.contentSide,
-                default = ContentSide.valueOf(RadioButtonConfiguratorProperties.DEFAULT.contentSide),
-            )
-        }
-        val intent: ToggleIntent = remember(key1 = properties.intent) {
-            safeEnumValueOf(
-                name = properties.intent,
-                default = ToggleIntent.valueOf(RadioButtonConfiguratorProperties.DEFAULT.intent),
-            )
-        }
+        val contentSide: ContentSide = remember(key1 = properties.contentSide, calculation = properties::contentSide)
+        val intent: ToggleIntent = remember(key1 = properties.intent, calculation = properties::intent)
         val onClick = {
             updateProperties { it.copy(isSelected = !it.isSelected) }
         }
@@ -148,7 +137,7 @@ private fun RadioButtonSample() {
                     DropdownMenuItem(
                         text = { Text(it.name) },
                         onClick = {
-                            updateProperties { properties -> properties.copy(intent = it.name) }
+                            updateProperties { properties -> properties.copy(intent = it) }
                             expanded = false
                         },
                     )
@@ -167,7 +156,7 @@ private fun RadioButtonSample() {
                 options = contentSidesLabel,
                 selectedOption = contentSide.name,
                 onOptionSelect = {
-                    updateProperties { properties -> properties.copy(contentSide = ContentSide.valueOf(it).name) }
+                    updateProperties { properties -> properties.copy(contentSide = ContentSide.valueOf(it)) }
                     focusManager.clearFocus()
                 },
                 modifier = Modifier
