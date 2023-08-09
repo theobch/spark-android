@@ -27,14 +27,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import com.adevinta.spark.catalog.themes.BrandMode
-import com.adevinta.spark.catalog.themes.ColorMode
-import com.adevinta.spark.catalog.themes.FontScaleMode
-import com.adevinta.spark.catalog.themes.TextDirection
 import com.adevinta.spark.catalog.themes.Theme
-import com.adevinta.spark.catalog.themes.ThemeMode
-import com.adevinta.spark.catalog.themes.UserMode
-import com.adevinta.spark.catalog.util.safeEnumValueOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -72,20 +65,20 @@ internal fun Flow<Theme>.collectAsStateWithDefault(): State<Theme> = collectAsSt
 
 private fun ThemeProperties.toTheme(): Theme = Theme(
     fontScale = fontScale,
-    userMode = safeEnumValueOf(name = userMode, default = UserMode.Part),
-    themeMode = safeEnumValueOf(name = themeMode, default = ThemeMode.System),
-    colorMode = safeEnumValueOf(name = colorMode, default = ColorMode.Baseline),
-    brandMode = safeEnumValueOf(name = brandMode, default = BrandMode.Polaris),
-    fontScaleMode = safeEnumValueOf(name = fontScaleMode, default = FontScaleMode.System),
-    textDirection = safeEnumValueOf(name = textDirection, default = TextDirection.System),
+    userMode = userMode,
+    themeMode = themeMode,
+    colorMode = colorMode,
+    brandMode = brandMode,
+    fontScaleMode = fontScaleMode,
+    textDirection = textDirection,
 )
 
 private fun Theme.toDataStoreThemeProperties(): ThemeProperties = ThemeProperties(
     fontScale = fontScale,
-    userMode = userMode.name,
-    themeMode = themeMode.name,
-    colorMode = colorMode.name,
-    brandMode = brandMode.name,
-    fontScaleMode = fontScaleMode.name,
-    textDirection = textDirection.name,
+    userMode = userMode,
+    themeMode = themeMode,
+    colorMode = colorMode,
+    brandMode = brandMode,
+    fontScaleMode = fontScaleMode,
+    textDirection = textDirection,
 )

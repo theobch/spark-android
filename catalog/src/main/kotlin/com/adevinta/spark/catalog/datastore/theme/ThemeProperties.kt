@@ -21,27 +21,33 @@
  */
 package com.adevinta.spark.catalog.datastore.theme
 
+import com.adevinta.spark.catalog.themes.BrandMode
+import com.adevinta.spark.catalog.themes.ColorMode
+import com.adevinta.spark.catalog.themes.FontScaleMode
+import com.adevinta.spark.catalog.themes.TextDirection
+import com.adevinta.spark.catalog.themes.ThemeMode
+import com.adevinta.spark.catalog.themes.UserMode
 import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ThemeProperties(
-    val themeMode: String,
-    val colorMode: String,
-    val brandMode: String,
-    val userMode: String,
     val fontScale: Float,
-    val fontScaleMode: String,
-    val textDirection: String,
+    val userMode: UserMode,
+    val themeMode: ThemeMode,
+    val colorMode: ColorMode,
+    val brandMode: BrandMode,
+    val fontScaleMode: FontScaleMode,
+    val textDirection: TextDirection,
 ) {
     companion object {
         val DEFAULT = ThemeProperties(
-            themeMode = "System",
-            colorMode = "Baseline",
-            brandMode = "Polaris",
-            userMode = "Part",
             fontScale = 1.0f,
-            fontScaleMode = "System",
-            textDirection = "System",
+            userMode = UserMode.Part,
+            themeMode = ThemeMode.System,
+            brandMode = BrandMode.Polaris,
+            colorMode = ColorMode.Baseline,
+            textDirection = TextDirection.System,
+            fontScaleMode = FontScaleMode.System,
 
         )
     }
