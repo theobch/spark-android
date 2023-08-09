@@ -51,7 +51,6 @@ import com.adevinta.spark.catalog.datastore.checkboxconfigurator.CheckboxConfigu
 import com.adevinta.spark.catalog.model.Configurator
 import com.adevinta.spark.catalog.themes.SegmentedButton
 import com.adevinta.spark.catalog.util.SampleSourceUrl
-import com.adevinta.spark.catalog.util.safeEnumValueOf
 import com.adevinta.spark.components.menu.DropdownMenuItem
 import com.adevinta.spark.components.text.Text
 import com.adevinta.spark.components.textfields.SelectTextField
@@ -96,20 +95,10 @@ private fun CheckboxSample() {
         modifier = Modifier.verticalScroll(scrollState),
     ) {
         var label: String? by remember { mutableStateOf(null) }
+        val intent: ToggleIntent = remember(key1 = properties.intent, calculation = properties::intent)
         val isEnabled: Boolean = remember(key1 = properties.isEnabled, calculation = properties::isEnabled)
-        val contentSide: ContentSide = remember(key1 = properties.contentSide) {
-            safeEnumValueOf(
-                name = properties.contentSide,
-                default = ContentSide.valueOf(CheckboxConfiguratorProperties.DEFAULT.contentSide),
-            )
-        }
-        val state: ToggleableState = remember(key1 = properties.state) {
-            safeEnumValueOf(
-                name = properties.state,
-                default = ToggleableState.valueOf(CheckboxConfiguratorProperties.DEFAULT.state),
-            )
-        }
-        var intent by remember { mutableStateOf(ToggleIntent.Main) }
+        val contentSide: ContentSide = remember(key1 = properties.contentSide, calculation = properties::contentSide)
+        val state: ToggleableState = remember(key1 = properties.state, calculation = properties::state)
         val onClick = {
             updateProperties {
                 it.copy(
@@ -117,7 +106,7 @@ private fun CheckboxSample() {
                         ToggleableState.On -> ToggleableState.Off
                         ToggleableState.Off -> ToggleableState.Indeterminate
                         ToggleableState.Indeterminate -> ToggleableState.On
-                    }.name,
+                    }
                 )
             }
         }
@@ -153,7 +142,7 @@ private fun CheckboxSample() {
                 options = contentSidesLabel,
                 selectedOption = state.name,
                 onOptionSelect = {
-                    updateProperties { properties -> properties.copy(state = ToggleableState.valueOf(it).name) }
+                    updateProperties { properties -> properties.copy(state = ToggleableState.valueOf(it)) }
                     focusManager.clearFocus()
                 },
                 modifier = Modifier
@@ -173,11 +162,11 @@ private fun CheckboxSample() {
             onExpandedChange = { expanded = !expanded },
             onDismissRequest = { expanded = false },
             dropdownContent = {
-                intents.forEach {
+                intents.forEach { intent ->
                     DropdownMenuItem(
-                        text = { Text(it.name) },
+                        text = { Text(intent.name) },
                         onClick = {
-                            intent = it
+                            updateProperties { properties -> properties.copy(intent = intent) }
                             expanded = false
                         },
                     )
@@ -197,7 +186,7 @@ private fun CheckboxSample() {
                 selectedOption = contentSide.name,
                 onOptionSelect = {
                     updateProperties { properties ->
-                        properties.copy(contentSide = ContentSide.valueOf(it).name)
+                        properties.copy(contentSide = ContentSide.valueOf(it))
                     }
                     focusManager.clearFocus()
                 },

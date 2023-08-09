@@ -21,21 +21,24 @@
  */
 package com.adevinta.spark.catalog.datastore.checkboxconfigurator
 
+import androidx.compose.ui.state.ToggleableState
+import com.adevinta.spark.components.toggles.ContentSide
+import com.adevinta.spark.components.toggles.ToggleIntent
 import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class CheckboxConfiguratorProperties(
     val isEnabled: Boolean,
-    val contentSide: String,
-    val state: String,
-    val intent: String,
+    val intent: ToggleIntent,
+    val state: ToggleableState,
+    val contentSide: ContentSide,
 ) {
     companion object {
         val DEFAULT = CheckboxConfiguratorProperties(
             isEnabled = true,
-            contentSide = "End",
-            state = "On",
-            intent = "Main",
+            intent = ToggleIntent.Main,
+            state = ToggleableState.On,
+            contentSide = ContentSide.End,
         )
     }
 }
