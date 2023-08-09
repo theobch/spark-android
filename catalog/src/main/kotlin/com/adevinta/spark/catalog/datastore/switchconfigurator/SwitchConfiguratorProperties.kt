@@ -21,21 +21,23 @@
  */
 package com.adevinta.spark.catalog.datastore.switchconfigurator
 
+import com.adevinta.spark.components.toggles.ContentSide
+import com.adevinta.spark.components.toggles.ToggleIntent
 import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class SwitchConfiguratorProperties(
     val isEnabled: Boolean,
-    val contentSide: String,
     val isSwitched: Boolean,
-    val intent: String,
+    val intent: ToggleIntent,
+    val contentSide: ContentSide,
 ) {
     companion object {
         val DEFAULT = SwitchConfiguratorProperties(
             isEnabled = true,
             isSwitched = false,
-            contentSide = "End",
-            intent = "Main",
+            intent = ToggleIntent.Main,
+            contentSide = ContentSide.End,
         )
     }
 }
