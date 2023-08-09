@@ -93,14 +93,12 @@ private fun TextFieldSample() {
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.verticalScroll(scrollState),
     ) {
+        val state: TextFieldState? = remember(key1 = properties.state, calculation = properties::state)
         val isEnabled: Boolean = remember(key1 = properties.isEnabled, calculation = properties::isEnabled)
         val isReadOnly: Boolean = remember(key1 = properties.isReadOnly, calculation = properties::isReadOnly)
         val isRequired: Boolean = remember(key1 = properties.isRequired, calculation = properties::isRequired)
         val isFilledIconToggleChecked = remember(key1 = properties.iconId) {
             properties.iconId != ResourcesCompat.ID_NULL
-        }
-        val state: TextFieldState? = remember(key1 = properties.state) {
-            properties.state?.let { runCatching { enumValueOf<TextFieldState>(it) }.getOrNull() }
         }
         val trailingContent: @Composable (() -> Unit) = remember(key1 = properties.iconId) {
             {
@@ -207,7 +205,7 @@ private fun TextFieldSample() {
                 onOptionSelect = {
                     updateProperties { properties ->
                         properties.copy(
-                            state = if (it == "Default") null else TextFieldState.valueOf(it).name,
+                            state = if (it == "Default") null else TextFieldState.valueOf(it),
                         )
                     }
                 },

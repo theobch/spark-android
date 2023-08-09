@@ -22,12 +22,14 @@
 package com.adevinta.spark.catalog.datastore.textfieldsconfigurator
 
 import androidx.core.content.res.ResourcesCompat
+import com.adevinta.spark.components.textfields.TextFieldState
 import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class TextFieldsConfiguratorProperties(
     val iconId: Int,
-    val state: String?,
+
+    val state: TextFieldState?,
     val isEnabled: Boolean,
     val isReadOnly: Boolean,
     val isRequired: Boolean,
