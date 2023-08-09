@@ -106,30 +106,10 @@ private fun ButtonSample() {
         var buttonText: String by remember { mutableStateOf(value = "Filled button") }
         val isLoading: Boolean = remember(key1 = properties.isLoading, calculation = properties::isLoading)
         val isEnabled: Boolean = remember(key1 = properties.isEnabled, calculation = properties::isEnabled)
-        val iconSide: IconSide = remember(key1 = properties.iconSide) {
-            safeEnumValueOf(
-                name = properties.iconSide,
-                default = IconSide.valueOf(ButtonsConfiguratorProperties.DEFAULT.iconSide),
-            )
-        }
-        val buttonSize: ButtonSize = remember(key1 = properties.size) {
-            safeEnumValueOf(
-                name = properties.size,
-                default = ButtonSize.valueOf(ButtonsConfiguratorProperties.DEFAULT.size),
-            )
-        }
-        val buttonStyle: ButtonStyle = remember(key1 = properties.style) {
-            safeEnumValueOf(
-                name = properties.style,
-                default = ButtonStyle.valueOf(ButtonsConfiguratorProperties.DEFAULT.style),
-            )
-        }
-        val buttonIntent: ButtonIntent = remember(key1 = properties.intent) {
-            safeEnumValueOf(
-                name = properties.intent,
-                default = ButtonIntent.valueOf(ButtonsConfiguratorProperties.DEFAULT.intent),
-            )
-        }
+        val iconSide: IconSide = remember(key1 = properties.iconSide, calculation = properties::iconSide)
+        val buttonSize: ButtonSize = remember(key1 = properties.size, calculation = properties::size)
+        val buttonStyle: ButtonStyle = remember(key1 = properties.style, calculation = properties::style)
+        val buttonIntent: ButtonIntent = remember(key1 = properties.intent, calculation = properties::intent)
         val icon: SparkIcon? = remember(key1 = properties.iconId) {
             if (properties.iconId == ResourcesCompat.ID_NULL) null else SparkIcon.DrawableRes(properties.iconId)
         }
@@ -212,7 +192,7 @@ private fun ButtonSample() {
                 options = iconsSidesLabel,
                 selectedOption = iconSide.name,
                 onOptionSelect = { iconSide ->
-                    updateProperties { it.copy(iconSide = iconSide) }
+                    updateProperties { it.copy(iconSide = IconSide.valueOf(iconSide)) }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -231,7 +211,7 @@ private fun ButtonSample() {
                 options = buttonStylesLabel,
                 selectedOption = buttonStyle.name,
                 onOptionSelect = { buttonStyle ->
-                    updateProperties { it.copy(style = buttonStyle) }
+                    updateProperties { it.copy(style = ButtonStyle.valueOf(buttonStyle)) }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -259,7 +239,7 @@ private fun ButtonSample() {
                     DropdownMenuItem(
                         text = { Text(intent.name) },
                         onClick = {
-                            updateProperties { it.copy(intent = intent.name) }
+                            updateProperties { it.copy(intent = intent) }
                             expanded = false
                         },
                     )
@@ -279,7 +259,8 @@ private fun ButtonSample() {
                 options = sizesLabel,
                 selectedOption = buttonSize.name,
                 onOptionSelect = { buttonSize ->
-                    updateProperties { it.copy(size = buttonSize) }
+
+                    updateProperties { it.copy(size = ButtonSize.valueOf(buttonSize)) }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -375,7 +356,7 @@ private fun ConfigedButton(
     }
 }
 
-private enum class ButtonStyle {
+internal enum class ButtonStyle {
     Filled,
     Outlined,
     Tinted,

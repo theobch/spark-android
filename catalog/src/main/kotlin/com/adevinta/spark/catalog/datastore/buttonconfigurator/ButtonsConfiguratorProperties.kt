@@ -22,26 +22,30 @@
 package com.adevinta.spark.catalog.datastore.buttonconfigurator
 
 import androidx.core.content.res.ResourcesCompat
+import com.adevinta.spark.catalog.configurator.samples.buttons.ButtonStyle
+import com.adevinta.spark.components.buttons.ButtonIntent
+import com.adevinta.spark.components.buttons.ButtonSize
+import com.adevinta.spark.components.buttons.IconSide
 import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ButtonsConfiguratorProperties(
     val isEnabled: Boolean,
     val isLoading: Boolean,
-    val iconSide: String,
-    val intent: String,
-    val size: String,
-    val style: String,
+    val iconSide: IconSide,
+    val intent: ButtonIntent,
+    val size: ButtonSize,
+    val style: ButtonStyle,
     val iconId: Int,
 ) {
     companion object {
         val DEFAULT = ButtonsConfiguratorProperties(
             isEnabled = true,
             isLoading = false,
-            iconSide = "START",
-            intent = "Main",
-            size = "Medium",
-            style = "Filled",
+            size = ButtonSize.Medium,
+            iconSide = IconSide.START,
+            intent = ButtonIntent.Main,
+            style = ButtonStyle.Filled,
             iconId = ResourcesCompat.ID_NULL,
         )
     }
